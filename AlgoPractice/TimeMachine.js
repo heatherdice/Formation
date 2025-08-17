@@ -5,6 +5,7 @@
         0 hours if A = B
         1 hour if A < B (traveling forward in time)
         2 hours if A > B (traveling backward in time)
+        
     EXPLORE
     input: arr
     output: int
