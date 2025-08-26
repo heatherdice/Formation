@@ -85,7 +85,7 @@ need to get to deepest arr to begin solving
 
 BRAINSTORM
 recursion
-time: loop O(n), recursion O(n)
+time: loop O(n), recursion O(n) -> O(n)
 space: O(n) -> recursive stack
 
 PLAN
