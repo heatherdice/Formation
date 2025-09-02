@@ -33,3 +33,30 @@ function mostFrequentElement(arr) {
 
 console.log(mostFrequentElement([1, 1, 2, 3, 3, 3, 1, 2, 5, 4, 2, 1])) // 1
 console.log(mostFrequentElement([2,3,2,2,5,4,4,4,3,4,5,5,2])) // 4
+
+// Cleaner code
+function mostFrequentElementCleaner(arr) {
+    if (!arr) return null
+    if (arr.length === 1) return arr[0]
+
+    let frequencies = new Map()
+
+    // populate frequency map & track frequencies
+    let max = 0
+    let result = null
+
+    for (let num of arr) {
+        let count = (frequencies.get(num) || 0) + 1
+        frequencies.set(num, count)
+
+        if (count > max || (count === max && num > result)) {
+        max = count
+        result = num
+        }
+    }
+
+    return result
+}
+
+console.log(mostFrequentElementCleaner([1, 1, 2, 3, 3, 3, 1, 2, 5, 4, 2, 1])) // 1
+console.log(mostFrequentElementCleaner([2,3,2,2,5,4,4,4,3,4,5,5,2])) // 4
