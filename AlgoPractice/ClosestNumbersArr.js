@@ -37,8 +37,8 @@ function closestNumbers(arr) {
     let sortedArr = arr.sort()
     let absMin = Infinity
 
-    for (let i = 0; i < sortedArr.length; i++) {
-        let currMin = Math.abs(sortedArr[i+1] - sortedArr[i])
+    for (let i = 0; i < sortedArr.length - 1; i++) {
+        let currMin = Math.abs(sortedArr[i] - sortedArr[i + 1])
         if (currMin < absMin) {
             absMin = currMin
         }
@@ -50,3 +50,4 @@ function closestNumbers(arr) {
 console.log(closestNumbers([3,6,1,5])) // 1
 console.log(closestNumbers([3,1])) // 2
 console.log(closestNumbers([7,9,4,4])) // 0
+console.log(closestNumbers([-5,6,3])) // 3
