@@ -93,3 +93,46 @@ console.log(findSiblingNodes(tree1)) // [2,3]
 console.log(findSiblingNodes(tree2)) // [3,4]
 console.log(findSiblingNodes(tree3)) // [3,4,9,7]
 console.log(findSiblingNodes(tree4)) // []
+
+// additional solutions
+// DFS
+function findSiblingNodesDFS(root) { 
+    let res = [] 
+    
+    function dfs(node) { 
+        if (!node) return 
+        
+        if (node.left && node.right) { 
+            res.push(node.left.value, node.right.value) 
+        } 
+
+        dfs(node.left) 
+        dfs(node.right) 
+    } 
+    
+    dfs(root) 
+    
+    return res 
+}
+
+// BFS w/ better time complexity
+// avaoids shift() & uses index pointer instead
+function findSiblingNodesHybrid(root) {
+    if (!root) return []
+
+    const queue = [root]
+    const res = []
+    let i = 0
+
+    while (i < queue.length) {
+        const node = queue[i++]
+
+        if (node.left && node.right) {
+        res.push(node.left.value, node.right.value)
+        }
+        if (node.left) queue.push(node.left)
+        if (node.right) queue.push(node.right)
+    }
+
+    return res;
+}
