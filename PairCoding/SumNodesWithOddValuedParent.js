@@ -86,18 +86,18 @@ const test2 = new TreeNode(2,
 
 function sumNodesWithOddParent(root) {
     function dfs(node) {
-        if (!node) return 0;
+        if (!node) return 0
         let sum = 0
 
         // if node is parent & odd
         if ((node.left || node.right) && node.value % 2 !== 0) {
-            if (node.left) sum += node.left.value;
-            if (node.right) sum += node.right.value;
+            if (node.left) sum += node.left.value
+            if (node.right) sum += node.right.value
         }
 
         // recursive sum
-        sum += dfs(node.left);
-        sum += dfs(node.right);
+        sum += dfs(node.left)
+        sum += dfs(node.right)
         return sum;
     }
 
@@ -107,3 +107,99 @@ function sumNodesWithOddParent(root) {
 console.log(sumNodesWithOddParent(test2)) // 0
 console.log(sumNodesWithOddParent(test1)) // 9
 console.log(sumNodesWithOddParent(test3)) // 13
+
+/*
+'''
+BFS SOLUTION
+
+EXPLORE
+input: BT
+output: int
+    sum of all nodes w/ odd-valued parents
+assume input is not BST
+edge case: LL input instead of BT
+null input -> null
+all even values -> 0
+all odd values -> sum of entire tree
+
+BRAINSTORM
+DFS preorder or BFS
+    check parent 1st
+
+Algo 1: BFS
+Time: O(n) -> traversing entire tree
+Space: O(n) -> queue
+    best case: O(h) -> height of tree
+
+PLAN
+if !root return null
+initialize oddSum set to 0
+initialize queue var = [root]
+while queue.length > 0
+    initialize node var to hold shifted node from queue
+    check if that val is odd
+        if yes, add node.left & node.right to oddSum
+    traverse by pushing left and right to queue
+return oddSum
+*/
+
+function sumNodesWithOddParent(root) {
+    if (!root) return null
+    
+    let oddSum = 0
+    let queue = [root]
+
+    while (queue.length) {
+            let curr = queue.shift()
+            if (curr.value % 2 != 0) {
+                if (curr.left) {
+                    oddSum += curr.left.value
+                }
+                if (curr.right) {
+                    oddSum += curr.right.value
+                }
+            }
+            if (curr.left) {
+                queue.push(curr.left)    
+            }
+            if (curr.right) {
+                queue.push(curr.right)
+            }
+    }
+
+    return oddSum
+}
+
+const root1 = null
+
+const test4 = new TreeNode(6,
+    new TreeNode(7,
+        new TreeNode(2, null, null),
+        new TreeNode(7, null, null)
+    ),
+    new TreeNode(8,
+        new TreeNode(1, null, null),
+        new TreeNode(3, null, null)
+    )
+);
+
+const test5 = new TreeNode(2,
+    new TreeNode(5, null, null),
+    new TreeNode(9, null, null)
+);
+
+const test6 = new TreeNode(6,
+    new TreeNode(7,
+        new TreeNode(2, null, null),
+        new TreeNode(7, null, null)
+    ),
+    new TreeNode(9,
+        new TreeNode(1, null, null),
+        new TreeNode(3, null, null)
+    )
+);
+
+console.log(sumNodesWithOddParent(root1)) // null
+console.log(sumNodesWithOddParent(test5)) // 0
+console.log(sumNodesWithOddParent(test4)) // 9
+console.log(sumNodesWithOddParent(test6)) // 13
