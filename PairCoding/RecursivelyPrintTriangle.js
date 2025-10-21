@@ -111,8 +111,8 @@ on each function call, 1st & last elements of arr are removed
 
 BRAINSTORM
 Solution: recursion, .join()
-Time: O(n) -> number of calls, .join()
-Space: O(n) -> recursive stack, .join()
+Time: O(n^2) -> sum of all join() and repeat() operations over all calls
+Space: O(n) -> recursive stack
 
 PLAN
 original function signature w/ arr argument
@@ -139,7 +139,7 @@ function printTriangleFromArr(arr) {
         console.log(spaces.repeat(whitespace) + returnString)
 
         arr.pop()
-        arr.shift()
+        arr.shift() // 
 
         helper(whitespace + 1)
     }
