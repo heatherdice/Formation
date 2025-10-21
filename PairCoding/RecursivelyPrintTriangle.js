@@ -31,35 +31,6 @@ recursion
 first line of our return is going to include k number of X's
     after that, reduce X's by 2, add 1 whitespace at front
 
-Algo 2
-input: arr of str's
-    str's individual char's
-    odd number of char's
-output: multi-line output of char's
-    forms shape of upside-down triangle
-leading spaces to form triangle
-deleting char's as we go
-    1st & last
-whitespace increases by 1 on each recursion
-are we allowed to modify the input? yes
-
-BRAINSTORM
-Algo 1, Solution 1: recursion
-Time: O(n) -> number of calls
-Space: O(n) -> recursive stack
-
-Algo 2, Solution 1:
-Time:
-Space:
-
-PLAN
-original function signature w/ argument of k
-    helper function w/ argument whitespace
-        base case: if k === 0 return
-        console.log("".repeat(whitespace) + "X".repeat(k))
-        k -= 2
-        recursive call of helper(whitespace + 1) 
-call helper function
 */
 
 function printXTriangle(k) {
@@ -117,19 +88,75 @@ printXTriangle(1); console.log("====")
 //     return
 // }
 
-// Follow-up: Instead of being given an integer k, you're given an array of characters of odd length and must follow the same pattern of printing the triangle while using the array contents.  There should be the correct amount of leading spaces on each level. You can assume the array will always be odd and not None.
+/* Follow-up: Instead of being given an integer k, you're given an array of characters of odd length and must follow the same pattern of printing the triangle while using the array contents.  There should be the correct amount of leading spaces on each level. You can assume the array will always be odd and not None.
+Example:
+printTriangle([a,b,c,d,e])
+abcde
+ bcd
+  c
 
-// function printTriangleRecursive(arr) {
-//   // helper function
-//     function helper() {
-//         // base case
-//         if (!arr) return
+EXPLORE
+input: arr of str's
+    str's individual char's
+    odd number of char's
+output: multi-line output of char's
+    forms shape of upside-down triangle
+leading spaces to form triangle
+deleting char's as we go
+    1st & last
+whitespace increases by 1 on each recursion
+are we allowed to modify the input? yes
+on each function call, 1st & last elements of arr are removed
+    OR, to avoid complexity, pop last element & shift index by 1
 
-//         // logic
+BRAINSTORM
+Solution: recursion, .join()
+Time: O(n) -> number of calls, .join()
+Space: O(n) -> recursive stack, .join()
 
-//         // recursive call
-//         helper()
-//     }
+PLAN
+original function signature w/ arr argument
+    initiate spaces var of " "
+    helper function w/ argument whitespace
+        base case: if !arr.length return
+        
+        initiate string var using arr.join("")
+        console.log spaces.repeat(whitespace) + string var
+        
+        arr.pop() to remove last arr element
+        arr.shift() to remove 1st arr element
 
-//     return helper()
-// }
+        recursive call of helper(whitespace + 1) 
+return helper function w/ argument 0
+
+*/
+function printTriangleFromArr(arr) {
+    let spaces = " "
+    function helper(whitespace) {
+        if (arr.length <= 0) return
+
+        let returnString = arr.join("")
+        console.log(spaces.repeat(whitespace) + returnString)
+
+        arr.pop()
+        arr.shift()
+
+        helper(whitespace + 1)
+    }
+
+    return helper(0)
+}
+
+printTriangleFromArr(['t','a','c','o','c','a','t']); console.log("====")
+// tacocat
+//  acoca
+//   coc
+//    o
+
+printTriangleFromArr(['a','b','c','d','e']); console.log("====")
+// abcde
+//  bcd
+//   c
+
+printTriangleFromArr(['X']); console.log("====")
+// X
