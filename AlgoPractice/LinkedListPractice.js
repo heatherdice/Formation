@@ -71,10 +71,10 @@ let list2 = new ListNode(1)
 let list3 = new ListNode(1, new ListNode(2, new ListNode(3)))
 let list4 = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))))
 
-console.log("list 1: ", arrayify(removeHeadAndTail(list1))) // [2, 3, 4, 5]
-console.log("list 2: ", arrayify(removeHeadAndTail(list2))) // []
-console.log("list 3: ", arrayify(removeHeadAndTail(list3))) // [2]
-console.log("list 4: ", arrayify(removeHeadAndTail(list4))) // [2, 3, 4]
+// console.log("list 1: ", arrayify(removeHeadAndTail(list1))) // [2, 3, 4, 5]
+// console.log("list 2: ", arrayify(removeHeadAndTail(list2))) // []
+// console.log("list 3: ", arrayify(removeHeadAndTail(list3))) // [2]
+// console.log("list 4: ", arrayify(removeHeadAndTail(list4))) // [2, 3, 4]
 
 /* 
 Given a linked list, remove the center node. If the length of the list is even, remove the first of the two center nodes.
@@ -133,10 +133,10 @@ function removeMiddleNodes(list) {
     return list
 }
 
-console.log("list 1: ", arrayify(removeMiddleNodes(list1))) // 1, 2, 5, 6
-console.log("list 2: ", arrayify(removeMiddleNodes(list2))) // null
-console.log("list 3: ", arrayify(removeMiddleNodes(list3))) // 1, 3
-console.log("list 4: ", arrayify(removeMiddleNodes(list4))) // 1, 2, 4, 5
+// console.log("list 1: ", arrayify(removeMiddleNodes(list1))) // 1, 2, 5, 6
+// console.log("list 2: ", arrayify(removeMiddleNodes(list2))) // null
+// console.log("list 3: ", arrayify(removeMiddleNodes(list3))) // 1, 3
+// console.log("list 4: ", arrayify(removeMiddleNodes(list4))) // 1, 2, 4, 5
 
 /*
 Remove every kth node in a linked list. k will always be >= 2
@@ -172,30 +172,30 @@ k = 2
 2
 */
 
-// Singly-linked lists are already defined with this interface:
-// function ListNode(x) {
-//   this.value = x;
-//   this.next = null;
-// }
-//
-function solution(head, k) {
+function removeEveryKthNode(head, k) {
     if (!head) return null
     if (!head.next) return head
     
-    let kCounter = k
-    let pointer = head
+    let dummy = new ListNode(0, head)
+    let prev = dummy
     let curr = head
+    let count = 1
     
-    while(pointer) {
-        if (kCounter === 1) {
-            pointer = curr.next
-            kCounter = k
+    while(curr) {
+        if (count % k === 0) {
+            prev.next = curr.next
         } else {
-            pointer = pointer.next
-            curr = curr.next
-            k--
+            prev = curr
         }
+
+        curr = curr.next
+        count++
     }
     
-    return head
+    return dummy.next
 }
+
+console.log(arrayify(removeEveryKthNode(list1, 3))) // [1, 2, 4, 5]
+console.log(arrayify(removeEveryKthNode(list2, 2))) // [1]
+console.log(arrayify(removeEveryKthNode(list3, 3))) // [1, 2]
+console.log(arrayify(removeEveryKthNode(list4, 4))) // [1, 2, 3, 5]
