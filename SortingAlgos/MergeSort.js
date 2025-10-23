@@ -1,6 +1,8 @@
 function merge(left, right) {
+    // create results arr (need to learn to do this w/ input arr)
     const results = []
 
+    // iterate through left & right subarr's, compare elements, & sort into results arr
     while (left.length && right.length) {
         if (left[0] < right[0]) {
             results.push(left.shift())
@@ -8,7 +10,7 @@ function merge(left, right) {
             results.push(right.shift())
         }
     }
-    // concatenate results to account for left or right having remaining elements in them
+    // add leftover number of left or right arr's if it exists
     return results.concat(left, right)
 }
 
@@ -16,12 +18,11 @@ function mergeSort(array) {
     // base case
     if (array.length <= 1) return array
 
-    // establish left & right arrays based off of defined middle index
-    let middle = Math.floor(array.length / 2)
-    const left = array.slice(0, middle)
-    const right = array.slice(middle)
+    let middle = Math.floor(array.length / 2) // find middle index of arr
+    const left = array.slice(0, middle) // contains 1st 1/2 of arr
+    const right = array.slice(middle) // contains 2nd 1/2 of arr
 
-    // create var to store sorted left & right arrays, created through recursion
+    // recursively call mergeSort on left & right subarr's, store in var's
     let sortedLeft = mergeSort(left)
     let sortedRight = mergeSort(right)
 
