@@ -31,6 +31,17 @@ function swapValuePairs(head) {
 
     return head
 }
+function swapValuePairsRecursive(head) {
+    if (!head || !head.next) return head
+
+    let curr = head
+    let temp = curr.val
+    curr.val = curr.next.val
+    curr.next.val = temp
+    
+    swapValuePairsRecursive(curr.next.next)
+    return head
+}
 
 function arrayify(head) {
     let ptr = head
@@ -43,9 +54,12 @@ function arrayify(head) {
 }
 
 let list1 = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))))
+let list1Recursive = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))))
 
 let testList = swapValuePairs(list1)
-console.log(arrayify(testList))
+console.log("iterative swap: ", arrayify(testList))
+let testListRecursive = swapValuePairsRecursive(list1Recursive)
+console.log("recursive swap: ", arrayify(testListRecursive))
 
 /* 
 2. function additionNext(head) - add to the value in each node by the value in the next node. The tail node has no next node so double its value
