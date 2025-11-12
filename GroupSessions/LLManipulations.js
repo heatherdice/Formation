@@ -74,13 +74,15 @@ Approach:
 */
 
 function additionNext(head) {
+    if (!head) return null
+
     let curr = head
 
     while (curr) {
         if (curr.next) {
-            curr.val = curr.val + curr.next.val
+            curr.val += curr.next.val
         } else {
-            curr.val = curr.val * 2
+            curr.val *= 2
         }
 
         curr = curr.next
