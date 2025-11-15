@@ -52,7 +52,7 @@ function countDuplicates(arr) {
 
     let duplicates = 0
 
-    for (const [key, value] of duplicateTracker) {
+    for (const value of duplicateTracker.values()) {
         if (value > 1) {
             duplicates++
         }
