@@ -18,64 +18,55 @@ Create a class that supports the following three methods:
 
 class GrabBag {
     constructor() {
-        this.items = [] // arr of all items, including dupes
-        this.indexes = new Map() // set of arr indexes
+        this.items = new Map() // item -> { count, index }
+        this.list = [] // each unique item appears exactly once
     }
 
     insert(item) {
-        // add item to list
-        this.items.push(item)
-        // keep track of final index
-        const lastItemIndex = this.items.length - 1
-
-        // add index to map if not already there
-        if (!this.indexes.has(item)) {
-            this.indexes.set(item, new Set())
-            this.indexes.get(item).add(lastItemIndex)
-        } else {
-            return false
+        // check if map already contains item
+        if (this.items.has(item)) {
+            const entry = this.items.get(item)
+            entry.count++
+            return false // existed already
         }
+
+        // add item to list & map; in map, indicate count & index within list
+        this.list.push(item)
+        this.items.set(item, { count: 1, index: this.list.length - 1 })
 
         return true
     }
 
     remove(item) {
-        // if both map and list are empty, item cannot be in bag
-        if (!this.indexes.has(item) || this.indexes.get(item).size === 0) {
-            return false
+        if (!this.items.has(item)) return false
+
+        const entry = this.items.get(item)
+        entry.count--
+
+        if (entry.count > 0) return true // still exists
+
+        // if count reached = 0, remove completely
+        const index = entry.index
+        const lastItem = this.list[this.list.length - 1]
+
+        // swap item to remove w/ last element
+        this.list[index] = lastItem
+
+        // update last index of element in map
+        if (lastItem !== item) {
+            this.items.get(lastItem).index = index
         }
 
-        // get an arbitrary index of this item
-        const indexSet = this.indexes.get(item)
-        const removeIndex = indexSet.values().next().values
-
-        // get last item in list
-        const lastIndex = this.items.length - 1
-        const lastItem = this.items[lastIndex]
-
-        // swap w/ last
-        this.items[removeIndex] = lastItem
-
-        // update lastItem's indexes
-        const lastSet = this.indexes.get(lastItem)
-        lastSet.delete(lastIndex)
-
-        if (removeIndex !== lastIndex) {
-            lastSet.add(removeIndex)
-        }
-
-        // remove last element
-        this.items.pop()
-
-        // clean empty index sets
-        if (indexSet.size === 0) {
-            this.indexes.delete(item)
-        }
+        // remove last position
+        this.list.pop()
+        this.items.delete(item)
 
         return true
     }
 
     getRandom() {
-        
+        if (this.list.length === 0) return null
+        const randomIndex = Math.floor(Math.random() * this.list.length)
+        return this.list[randomIndex]
     }
 }
