@@ -46,5 +46,37 @@ function match(value) {
 
 // 3. Find the most frequent value in a binary tree
 function mostFrequentNode(root) {
+    if (!root) return
+
+    const queue = [root]
+    const freqMap = new Map()
+
+    while (queue.length > 0) {
+        const node = queue.shift()
+        const value = node.value
+
+        freqMap.set(value, (freqMap.get(value) || 0) + 1)
+    }
+
+    if (node.left) queue.push(node.left)
+    if (node.right) queue.push(node.right)
     
+    
+
+    
+}
+
+// 4. Find the most frequent value in a binary tree that matches a predicate
+
+
+// 5. Find the smallest positive value in a binary tree
+function smallestPositive(root) {
+    if (!root) return Infinity
+
+    const left = smallestPositive(root.left)
+    const right = smallestPositive(root.right)
+
+    const current = root.value > 0 ? root.value : Infinity
+
+    return Math.min(current, left, right)
 }
