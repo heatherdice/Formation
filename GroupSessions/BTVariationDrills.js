@@ -61,9 +61,15 @@ function mostFrequentNode(root) {
     if (node.left) queue.push(node.left)
     if (node.right) queue.push(node.right)
     
-    
+    let mostFrequent = 0
 
-    
+    for (const [key, value] of freqMap.entries()) {
+        if (value > mostFrequent) {
+            mostFrequent = value
+        }
+    }
+
+    return mostFrequent
 }
 
 // 4. Find the most frequent value in a binary tree that matches a predicate
