@@ -31,7 +31,20 @@ function count(root, target) {
         + count(root.right, target)
 }
 
-// Count the number of items in the tree that satisfy a predicate function
+// 2. Count the number of items in the tree that satisfy a predicate function
 function countPredicate(root, predicate) {
+    if (!root) return 0
+
+    return (predicate(root.value) ? 1 : 0)
+        + countPredicate(root.left, predicate)
+        + countPredicate(root.right, predicate)
+}
+
+function match(value) {
+    return true
+}
+
+// 3. Find the most frequent value in a binary tree
+function mostFrequentNode(root) {
     
 }
