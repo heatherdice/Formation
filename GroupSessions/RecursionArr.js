@@ -41,7 +41,7 @@ console.log(isPalindromeSlice([1, 2, 1])) // true
 function shiftArr(arr) {
     if (arr.length <= 1) return arr
     
-    let last = arr.pop()
+    const last = arr[arr.length - 1]
 
     function helper(index) {
         if (index === 0) {
