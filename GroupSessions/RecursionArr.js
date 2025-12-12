@@ -36,7 +36,11 @@ console.log(isPalindromeSlice([1, 1])) // true
 console.log(isPalindromeSlice([1, 2, 1])) // true
 
 
-/* Shift the elements in an array by 1 and move the last element to the first ([1, 2, 3, 4] => [4, 1, 2, 3]) */
+/* Shift the elements in an array by 1 and move the last element to the first 
+
+EXAMPLE
+([1, 2, 3, 4] => [4, 1, 2, 3]) 
+*/
 
 function shiftArr(arr) {
     if (arr.length <= 1) return arr
