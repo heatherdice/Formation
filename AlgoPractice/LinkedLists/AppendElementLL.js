@@ -23,7 +23,8 @@ class ListNode{
     }
 }
 
-function append(head, target) {
+// recursive solution
+function appendRecursive(head, target) {
     if (!head) return new ListNode(target)
 
     if (!head.next) {
@@ -31,8 +32,23 @@ function append(head, target) {
         return head
     }
 
-    append(head.next, target)
+    appendRecursive(head.next, target)
     return head
+}
+
+// iterative solution
+function appendIterative(head, target) {
+    if (!head) return new ListNode(target)
+
+    let sentinel = new ListNode(null, head)
+
+    while (head.next) {
+        head = head.next
+    }
+
+    head.next = new ListNode(target)
+
+    return sentinel.next
 }
 
 function arrayify(head) {
@@ -46,6 +62,13 @@ function arrayify(head) {
 }
 
 var LL1 = new ListNode(1, new ListNode(4, new ListNode(5)))
-console.log(arrayify(append(null, 1))) // [1]
-console.log(arrayify(append(LL1, 7))) // [1, 4, 5, 7]
-console.log(arrayify(append(new ListNode(0), 7))) // [0, 7]
+var LL2 = new ListNode(1, new ListNode(4, new ListNode(5)))
+
+
+console.log(arrayify(appendRecursive(null, 1))) // [1]
+console.log(arrayify(appendRecursive(LL1, 7))) // [1, 4, 5, 7]
+console.log(arrayify(appendRecursive(new ListNode(0), 7))) // [0, 7]
+
+console.log(arrayify(appendIterative(null, 1))) // [1]
+console.log(arrayify(appendIterative(LL2, 7))) // [1, 4, 5, 7]
+console.log(arrayify(appendIterative(new ListNode(0), 7))) // [0, 7]
