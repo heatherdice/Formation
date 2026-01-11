@@ -1,0 +1,116 @@
+/* 
+A valid parenthesis string is either empty "", "(" + A + ")", or A + B, where A and B are valid parentheses strings, and + represents string concatenation.
+
+For example, "", "()", "(())()", and "(()(()))" are all valid parentheses strings.
+
+A valid parentheses string s is primitive if it is nonempty, and there does not exist a way to split it into s = A + B, with A and B nonempty valid parentheses strings.
+
+Given a valid parentheses string s, consider its primitive decomposition: s = P1 + P2 + ... Pk where Pi are primitive valid parentheses strings.
+
+Return s after removing the outermost parentheses of every primitive string in the primitive decomposition of s.
+
+Example 1:
+Input: s = "(()())(())"
+Output: "()()()"
+Explanation: 
+The input string is "(()())(())", with primitive decomposition "(()())" + "(())".
+After removing outer parentheses of each part, this is "()()" + "()" = "()()()".
+
+Example 2:
+Input: s = "(()())(())(()(()))"
+Output: "()()()()(())"
+Explanation: 
+The input string is "(()())(())(()(()))", with primitive decomposition "(()())" + "(())" + "(()(()))".
+After removing outer parentheses of each part, this is "()()" + "()" + "()(())" = "()()()()(())".
+
+Example 3:
+Input: s = "()()"
+Output: ""
+Explanation: 
+The input string is "()()", with primitive decomposition "()" + "()".
+After removing outer parentheses of each part, this is "" + "" = "".
+
+EXPLORE
+- input: str s
+- output: str s w/ outermost parentheses removed
+- problem requires solving by splitting str into parentheses groups
+
+BRAINSTORM/PLAN
+Could use a queue to keep track of parentheses pairs
+    - stack is FIFO
+- conditional: check if openCount >= 1 && openCount === closedCount
+    - if yes, dequeue elements to result str
+    - if no, push char to queue
+
+*/
+
+class ParenthesesQueue {
+    constructor() {
+        this.items = {};
+        this.frontIndex = 0;
+        this.backIndex = 0;
+    }
+
+    enqueue(item) {
+        this.items[this.backIndex] = item;
+        this.backIndex++;
+    }
+
+    dequeue() {
+        if (this.frontIndex === this.backIndex) {
+            return null;
+        }
+
+        const item = this.items[this.frontIndex];
+        delete this.items[this.frontIndex];
+        this.frontIndex++;
+
+        return item;
+    }
+
+    isEmpty() {
+        return this.frontIndex === this.backIndex;
+    }
+
+    clear() {
+        this.items = {};
+        this.frontIndex = 0;
+        this.backIndex = 0;
+    }
+}
+
+function removeOuterParentheses(s) {
+    let openCount = 0;
+    let closedCount = 0;
+    let trackerQueue = new ParenthesesQueue();
+    let result = "";
+
+    for (let i = 0; i < s.length; i++) {
+        if (s[i] === "(") {
+            openCount++;
+        } else {
+            closedCount++;
+        }
+
+        trackerQueue.enqueue(s[i]);
+
+        if (openCount === closedCount) {
+            trackerQueue.dequeue();
+        while (trackerQueue.backIndex - trackerQueue.frontIndex > 1) {
+            result += trackerQueue.dequeue();
+        }
+
+            trackerQueue.dequeue();
+
+            openCount = 0;
+            closedCount = 0;
+            trackerQueue.clear();
+        }
+    }
+
+    return result;
+}
+
+console.log(removeOuterParentheses("(()())(())")); // ()()()
+console.log(removeOuterParentheses("(()())(())(()(()))")); // )()()()(())
+console.log(removeOuterParentheses("()()")); // 
