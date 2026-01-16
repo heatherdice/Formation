@@ -78,8 +78,6 @@ function sumAccumulator(resultSoFar, nodeVal) {
     return resultSoFar
 }
 
-
-
 function reduce(head, accumulator, initialVal) {
     let totalSoFar = initialVal
     let curr = head
