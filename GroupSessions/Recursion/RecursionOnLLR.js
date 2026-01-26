@@ -37,6 +37,30 @@ console.log(countVal(list2, 4)) // 2
 console.log(countVal(list2, 0)) // 0
 console.log(countVal(new ListNode(), 1)) // 0
 
+// Find the mean of a list of integers
+function findSum(head) {
+    if (!head) return 0
+
+    return head.value + findSum(head.next)
+}
+function counter(head, count = 0) {
+    if (!head) return count
+
+    count += 1
+    return counter(head.next, count)
+}
+function mean(head) {
+    if (!head) return 0
+
+    let sum = findSum(head)
+    let count = counter(head)
+
+    return sum / count
+}
+
+let list3 = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))) // 15 / 5 = 3
+console.log(mean(list3))
+
 // Replace all negative values with a 0
 function replaceNeg(head) {
     if (!head) return head
