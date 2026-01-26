@@ -74,5 +74,19 @@ function replaceNeg(head) {
     return head
 }
 
-let list = new ListNode(-1, new ListNode(1, new ListNode(-3)))
-console.log(replaceNeg(list))
+let list4 = new ListNode(-1, new ListNode(1, new ListNode(-3)))
+console.log(replaceNeg(list4))
+
+// Reverse all elements in a list
+function reverseList(head) {
+    if (!head || !head.next) return head
+
+    let newHead = reverseList(head.next)
+    head.next.next = head
+    head.next = null
+
+    return newHead
+}
+
+let list5 = new ListNode(5, new ListNode(4, new ListNode(3, new ListNode(2, new ListNode(1)))))
+console.log(reverseList(list5))
